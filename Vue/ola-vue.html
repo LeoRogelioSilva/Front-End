@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olá, Vue.js!</title>
+    <script src="./assets/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <header-component
+                v-for="todo in todos"
+                v-bind:todo="todo"
+                v-bind:key="todo.id"
+            />
+        </ul>
+        
+        <hr>
+        <h1 v-if="n > 4">maior</h1>
+        <h1 v-else-if="n == 4">iguak</h1>
+        <h1 v-else>menor</h1>
+        <input type="text" v-model="conteudo" placeholder="Digite Algo">
+        <p>{{conteudo}}</p>
+        <hr>
+        <dl v-if="verifica">
+            <dd v-for="lista in listas">
+                <br>
+                ID: <b>{{lista.id}}</b> <br>
+                NOME: <b>{{lista.nome}}</b><br>
+                IDIOMA: <b>{{lista.idioma}}</b><br>
+            </dd>
+           
+        </dl>
+        <p v-else>Nada a ser exibido</p>
+        <hr>
+        <button v-on:click="exibeAlerta('miau')">Clique Aqui</button>
+        <br>
+        <h1 v-html="mensagem" :style="myStyle"></h1>
+        <button v-on:click="mudaCor">Clique Aqui</button>
+    </div>
+
+    <script>
+        Vue.component('header-component',{props: ['todo'], template: '<li>{{todo.text}}</li>'})
+        var app = new Vue({
+            el: '#app',
+            data: {
+                mensagem: 'Olá, Vue.js!',
+                todos: [
+                    {id: 1, text: 'miau'},
+                    {id: 2, text: 'auau'},
+                    {id: 3, text: 'cócó'},
+                ],
+                n: 5,
+                listas: [
+                    {
+                        id: 1,
+                        nome: 'Leo',
+                        idioma: "PT-BR"
+                    },
+                    {
+                        id: 2,
+                        nome: 'Bruno',
+                        idioma: "PT-BR"
+                    },
+                    {
+                        id: 3,
+                        nome: 'MAt',
+                        idioma: "PT-BR"
+                    }
+                ],
+                verifica: true,
+                conteudo: "miauu",
+                myStyle:{
+                    color: '#00ccff'
+                }
+            },
+            methods: {
+                exibeAlerta: function(param){
+                    this.mensagem = param
+                },
+                mudaCor: function(){
+                    this.verifica ? this.myStyle = {color: '#f00' } : this.myStyle = "color: #0f0"
+                    this.verifica = !this.verifica
+                },
+                onLoadPage: function(param){
+                    alert(param)
+                }
+            },
+
+            mounted: function(){
+                this.onLoadPage("mounted")
+            }
+        });
+    </script>
+</body>
+
+</html>
