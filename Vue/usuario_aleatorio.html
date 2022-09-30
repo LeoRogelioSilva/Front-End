@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/axios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+        integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div#app img{
+            border-radius: 50%;
+            border: 5px solid silver;
+            margin-bottom: 1rem;
+            width: 128px;
+            height: 128px;
+        }
+
+        h1, h2 {
+            margin-bottom: 3px;
+        }
+        h1{
+            font-size: 27px;
+        }
+        h2{
+            font-size: 24px;
+        }
+        h3{
+            font-size: 18px; margin-bottom: 15px;
+        }
+
+        div#app button{
+            cursor: pointer;
+            display: inline-block;
+            color: #eee;
+            font-size: 18px;
+            border: 1px solid silver;
+            padding: 20px;
+        }
+
+
+        .male {
+            background-color: steelblue;
+        }
+
+        .female {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="ui container">
+        <img v-bind:src="usuario.picture.medium" v-bind:alt="usuario.name.first" width="20px">
+        <h1>{{usuario.name.title}} {{usuario.name.first}} {{usuario.name.last}}</h1>
+        <h2>{{usuario.email}}</h2>
+        <h3>{{usuario.phone}}</h3>
+        <button v-bind:class="usuario.gender" @click="geraNovo()">Novo Usuário</button>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                usuario: {
+                    picture: {
+                        medium: 'gato.webp'
+                    },
+                    name: {
+                        title: '',
+                        first: 'Leo',
+                        last: 'Rogelio'
+                    },
+                    sobrenome: 'Rogelio',
+                    email: 'leorogelio1202@gmail.com',
+                    phone: '(12)997849493',
+                    gender: 'male'
+                }
+            },
+            methods: {
+                async geraNovo() {
+                    //axios.get("https://randomuser.me/api").then(response => this.usuario = (response.data.results[0]))
+                    const res = await fetch("https://randomuser.me/api")
+                    const resultado = await res.json()
+                    if(resultado){
+                        this.usuario = resultado.results[0]
+                    }
+                }
+            },
+        });
+    </script>
+
+</body>
+
+</html>
