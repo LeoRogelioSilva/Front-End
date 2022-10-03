@@ -18,7 +18,7 @@
             box-sizing: border-box;
         }
 
-        div#app img{
+        div#app img {
             border-radius: 50%;
             border: 5px solid silver;
             margin-bottom: 1rem;
@@ -26,20 +26,25 @@
             height: 128px;
         }
 
-        h1, h2 {
+        h1,
+        h2 {
             margin-bottom: 3px;
         }
-        h1{
+
+        h1 {
             font-size: 27px;
         }
-        h2{
+
+        h2 {
             font-size: 24px;
         }
-        h3{
-            font-size: 18px; margin-bottom: 15px;
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
         }
 
-        div#app button{
+        div#app button {
             cursor: pointer;
             display: inline-block;
             color: #eee;
@@ -47,7 +52,6 @@
             border: 1px solid silver;
             padding: 20px;
         }
-
 
         .male {
             background-color: steelblue;
@@ -60,12 +64,25 @@
 </head>
 
 <body>
-    <div id="app" class="ui container">
-        <img v-bind:src="usuario.picture.medium" v-bind:alt="usuario.name.first" width="20px">
-        <h1>{{usuario.name.title}} {{usuario.name.first}} {{usuario.name.last}}</h1>
-        <h2>{{usuario.email}}</h2>
-        <h3>{{usuario.phone}}</h3>
-        <button v-bind:class="usuario.gender" @click="geraNovo()">Novo Usuário</button>
+    <div id="app" class="ui center aligned container">
+
+
+
+        <div class="ui center aligned container" style="width: 500px;">
+            <div class="ui card">
+                <div class="ui image">
+                    <img v-bind:src="usuario.picture.large" v-bind:alt="usuario.name.first">
+                </div>
+                <div class="content">
+                    <h1>{{usuario.name.title}} {{usuario.name.first}} {{usuario.name.last}}</h1>
+                    <h2>{{usuario.email}}</h2>
+                    <h3>{{usuario.phone}}</h3>
+                </div>
+                <div class="extra content">
+                    <button v-bind:class="usuario.gender" @click="geraNovo()">Novo Usuário</button>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -75,7 +92,7 @@
             data: {
                 usuario: {
                     picture: {
-                        medium: 'gato.webp'
+                        large: 'gato.webp'
                     },
                     name: {
                         title: '',
@@ -93,7 +110,7 @@
                     //axios.get("https://randomuser.me/api").then(response => this.usuario = (response.data.results[0]))
                     const res = await fetch("https://randomuser.me/api")
                     const resultado = await res.json()
-                    if(resultado){
+                    if (resultado) {
                         this.usuario = resultado.results[0]
                     }
                 }

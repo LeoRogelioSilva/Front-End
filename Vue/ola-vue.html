@@ -14,50 +14,50 @@
 
 <body class="ui container">
     <div id="app">
-        <h1>Hello World</h1>
-        <br><hr>
-        <ul>
-            <header-component
-                v-for="todo in todos"
-                v-bind:todo="todo"
-                v-bind:key="todo.id"
-            />
-        </ul>
+        <header>
+            <h1>Hello World</h1>
+        </header>
         
+        <br>
         <hr>
-        <h1 v-if="n > 4">maior</h1>
-        <h1 v-else-if="n == 4">iguak</h1>
-        <h1 v-else>menor</h1>
-        <input type="text" v-model="conteudo" placeholder="Digite Algo">
-        <p>{{conteudo}}</p>
+        <ul>
+            <header-component v-for="todo in todos" v-bind:todo="todo" v-bind:key="todo.id" />
+        </ul>
+
+        <div class="ui input focus">
+            <input class="ui button" type="text" v-model="conteudo" placeholder="Digite Algo">
+            <input type="text" v-model="conteudo">
+        </div>
+
         <hr>
         <dl v-if="verifica">
             <dd v-for="lista in listas">
-                <br>
                 ID: <b>{{lista.id}}</b> <br>
                 NOME: <b>{{lista.nome}}</b><br>
-                IDIOMA: <b>{{lista.idioma}}</b><br>
+                IDIOMA: <b>{{lista.idioma}}</b><br><br>
             </dd>
-           
+
         </dl>
         <p v-else>Nada a ser exibido</p>
         <hr>
-        <button v-on:click="exibeAlerta('miau')">Clique Aqui</button>
         <br>
-        <h1 v-html="mensagem" :style="myStyle"></h1>
-        <button v-on:click="mudaCor">Clique Aqui</button>
+        <div class="ui center aligned container">
+            <h1 v-html="mensagem" :style="myStyle"></h1>
+            <button class="ui button" v-on:click="mudaCor">Clique Aqui</button>
+        </div>
+
     </div>
 
     <script>
-        Vue.component('header-component',{props: ['todo'], template: '<li>{{todo.text}}</li>'})
+        Vue.component('header-component', { props: ['todo'], template: '<li>{{todo.text}}</li>' })
         var app = new Vue({
             el: '#app',
             data: {
                 mensagem: 'Olá, Vue.js!',
                 todos: [
-                    {id: 1, text: 'miau'},
-                    {id: 2, text: 'auau'},
-                    {id: 3, text: 'cócó'},
+                    { id: 1, text: 'Estudar' },
+                    { id: 2, text: 'Comer' },
+                    { id: 3, text: 'Dormir' },
                 ],
                 n: 5,
                 listas: [
@@ -69,7 +69,7 @@
                     {
                         id: 2,
                         nome: 'Bruno',
-                        idioma: "PT-BR"
+                        idioma: "PT-PT"
                     },
                     {
                         id: 3,
@@ -78,27 +78,31 @@
                     }
                 ],
                 verifica: true,
-                conteudo: "miauu",
-                myStyle:{
+                conteudo: "Espelho Espelho Meu",
+                myStyle: {
                     color: '#00ccff'
                 }
             },
             methods: {
-                exibeAlerta: function(param){
+                exibeAlerta: function (param) {
                     this.mensagem = param
                 },
-                mudaCor: function(){
-                    this.verifica ? this.myStyle = {color: '#f00' } : this.myStyle = "color: #0f0"
+                mudaCor: function () {
+                    if(this.verifica){
+                        this.myStyle = { color: '#f00' };
+                        this.mensagem = "Tchau, Vue.js!";
+                    }
+                    else{
+                        this.myStyle = "color: #0f0";
+                        this.mensagem = "Olá, Vue.js!";
+                    }
                     this.verifica = !this.verifica
                 },
-                onLoadPage: function(param){
+                onLoadPage: function (param) {
                     alert(param)
                 }
             },
 
-            mounted: function(){
-                this.onLoadPage("mounted")
-            }
         });
     </script>
 </body>
